@@ -1,4 +1,3 @@
-import re
 import tldextract
 import rarfile
 import os 
