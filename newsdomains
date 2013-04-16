@@ -14,7 +14,6 @@ abcnews
 foxnews
 cbsnews
 baltimoresun
-<<<<<<< HEAD
 huffingtonpost
 examiner
 topix
@@ -28,12 +27,10 @@ azcentral
 courierpress
 heraldonline
 go
-=======
 reuters
 huffingtonpost
 examiner
 topix
->>>>>>> c0bee3148d0df00819c638fb6e9f298d4e7412b9
 freerepublic
 townhall
 reason
@@ -49,11 +46,8 @@ drudgereport
 drudge
 pjmedia
 theblaze
-<<<<<<< HEAD
 cnet
-=======
 worldnetdaily
->>>>>>> c0bee3148d0df00819c638fb6e9f298d4e7412b9
 washingtontimes
 hotair
 realclearpolitics
@@ -67,8 +61,6 @@ hannity
 cato
 volokh
 billoreilly
-<<<<<<< HEAD
-=======
 mercurynews
 suntimes
 dallasnews
@@ -76,7 +68,6 @@ chron
 denverpost
 azcentral
 thestar
->>>>>>> c0bee3148d0df00819c638fb6e9f298d4e7412b9
 forbes
 io9
 kotaku
@@ -159,7 +150,5 @@ news
 iht
 pravda
 xinhuanet
-=======
 go
 wn
->>>>>>> c0bee3148d0df00819c638fb6e9f298d4e7412b9
