@@ -1,18 +1,11 @@
 import sys
 import os
 import ast
-import collections
 import tldextract
+import gzip
 import pymongo
 from pymongo import MongoClient
-import gzip
-
-def domainfilter(urlstring):
-	url = tldextract.extract(urlstring)
-	print url.subdomain + '.' + url.domain
-	
-#def newdoc(snapdoc):
-
+from datetime import datetime
 
 def main():
 
@@ -38,7 +31,11 @@ def main():
 			print item + ' processed.'
 
 			for doc in snapdocs:
-				print domainfilter(doc['url'])
+				url = tldextract.extract(doc['url'])
+				doc['subdomain'] = url.subdomain
+				doc['domain'] = url.domain
+				doc['tld'] = url.tld
+				doc['date'] = datetime.strptime(doc['date'], '%Y-%m-%d %H:%M:%S')
 				collection.insert(doc)
 
 			print item + ' added to database.'

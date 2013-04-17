@@ -15,7 +15,7 @@ def newitem(name):
         'title': '__notitle__',
         'content': '__nocontent__',
         'links': 0,
-        'quotes': 0,
+        'quotes': [],
     }
 
 def printitem(ditem):
@@ -28,7 +28,7 @@ def printitem(ditem):
     else:
         ditem['links'] = str(ditem['links'])
             
-    if ditem['quotes'] == 0:
+    if ditem['quotes'] == []:
         ditem['quotes'] = '__noquotes__'
     else:
         ditem['quotes'] = str(ditem['quotes'])
@@ -54,10 +54,10 @@ def domainfilter(urlstring, domains):
 		return False
 
 
-def process_file(snaptext, domains):
+def process_file(snaptext, filename, domains):
 	outfile = []
 	snapfile = open(snaptext, 'r')
-	ditem = newitem(snaptext)
+	ditem = newitem(filename)
 
 	for line in snapfile:
 		cline = line.split('\n')[0]				
@@ -68,12 +68,13 @@ def process_file(snaptext, domains):
 			if ditem['url'] != '__nourl__':
 				outfile.append(ditem)
 
-			ditem = newitem(snaptext)
+			ditem = newitem(filename)
 
 			continue
 
 		key = words[0]
 		value = words[1]
+			
 
 		if key == 'U':
 			urlfilter = domainfilter(value, domains)
@@ -88,13 +89,20 @@ def process_file(snaptext, domains):
 		elif key == 'C':
 			ditem['content'] = value
 		elif key == 'L':
+			#print value
 			ditem['links'] += 1
 		elif key == 'Q':
-			ditem['quotes'] += 1
+			ditem['quotes'].append(
+				{
+					'onset': words[1], 
+					'length': words[2], 
+					'quote': words[3]
+				})
 		else:
 			print '*** ERROR: unknown key'
 			#sys.exit(1)
-	
+
+		
 	return outfile
 	
 	snapfile.close()
@@ -121,8 +129,9 @@ def main():
 			try:
 			    tmp_dir = tempfile.mkdtemp()
 			    rf.extractall(path=tmp_dir)
-			    flatsnap = process_file(os.path.join(tmp_dir, rf.namelist()[0]), newsdomains)
-			    archive_name = os.path.splitext(rf.namelist()[0])[0] + '_news.gz'
+			    filename = rf.namelist()[0]
+			    flatsnap = process_file(os.path.join(tmp_dir, filename), filename, newsdomains)
+			    archive_name = os.path.splitext(filename)[0] + '_news.gz'
 			    with gzip.open(archive_name, 'wb') as archive:
 			    	for item in flatsnap:
 			    		archive.write('%s\n' % item)
